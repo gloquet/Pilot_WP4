@@ -26,4 +26,30 @@ data.right.cor <- cor(data.right.source, use = 'complete.obs')
 #png('Scree.png',width = 1000, height = 700)
 
 nr.factors_right <- fa.parallel(data.right.cor, n.obs = 75, fa = 'fa')
-nr.factors
+
+fa_val <- data.frame(1:34,nr.factors_right$fa.values + 0.05)
+names(fa_val) <- c('Factor_number','Eigenvalue')
+
+#png('Scree_new.png',width=800, height = 500)
+
+scree1 <- ggplot(fa_val, aes(x=Factor_number, y=Eigenvalue))+
+  geom_line() +
+  geom_point(color = 'red', size = 4) + 
+  geom_hline(yintercept = 0, linetype='dashed',color='black') +
+  scale_x_discrete(name = 'Factor number',limits=factor(1:34)) +
+  theme(text = element_text(size=19),
+        axis.text.x = element_text(size=19),
+        axis.text.y = element_text(size=19))
+
+#-----------plot suggests 9 components-----------------#
+
+fa.right <- fa(data.right.cor, nfactors = 9
+             , rotate = 'varimax', fm = 'pa',SMC = FALSE, n.obs = 75)
+
+#-----------plot diagram-------------------------------#
+
+
+
+
+
+
